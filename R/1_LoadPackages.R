@@ -1,7 +1,7 @@
 
 #####################Loadpackages-------------------------------------------------------
 
-options(java.parameters='-Xmx23G')
+options(java.parameters='-Xmx20G')
 options(scipen=9999999999)
 library(r5r)
 

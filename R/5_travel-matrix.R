@@ -3,8 +3,6 @@
 
 
 
-
-
 ###### Load packages -------------------------------------------------
 source("./R/1_LoadPackages.R")
 
@@ -55,9 +53,10 @@ r5r_core <- r5r::setup_r5(data_path = datapath)
 
 
 
-# loop over multople trip plans
+# loop over multiple trip plans
 for( i in plan_weekday$id){ # i = 4
 
+  message(paste0('working on ', i))
   ## input
     activity <- plan_weekday$activity[i]
     departure_hour  <- plan_weekday$departure_time[i]
@@ -83,11 +82,13 @@ for( i in plan_weekday$id){ # i = 4
                                    mode = mode,
                                    time_window = time_window,
                                    departure_datetime = departure_datetime,
-                                   max_trip_duration = 90,
+                                   max_trip_duration = 180,
                                    percentiles = 50,
-                                   walk_speed = 3.6,
-                                   max_walk_dist = 900,
-                                   verbose = F)
+                                   walk_speed = 5,
+                                   bike_speed = 15,
+                                   max_walk_dist = 10000,
+                                   max_bike_dist = 10000,
+                                   verbose = T)
     
     # adding matrix info
     ttm[, activity := activity]
@@ -101,6 +102,7 @@ for( i in plan_weekday$id){ # i = 4
     readr::write_rds(x = ttm, file = dest_file, compress = 'gz')
     fwrite(x = ttm, file = dest_file_csv)
 }
+
 }
 
 
